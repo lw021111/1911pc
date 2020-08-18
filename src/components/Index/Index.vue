@@ -5,33 +5,34 @@
   <div class="micronews-header-wrap">
     <div class="micronews-header w1000 layui-clear">
       <h1 class="logo">
-        <a href="index.html">
+        <router-link to='/'>
           <img src="@/assets/static/images/LOGO.png" alt="logo">
           <span class="layui-hide">LOGO</span>
-        </a>
+        </router-link>
       </h1>
       <p class="nav">
-        <router-link to='/'></router-link>
+        <router-link to='/'  class="active">最新</router-link>
         <router-link to='/List'>娱乐</router-link>
-        <router-link to='/Detail'>财经</router-link>
-        <router-link to='/Perslnfo'>评论</router-link>
-        <router-link to='/Search'>最新</router-link>
+        <router-link to='/List'>生活</router-link>
+        <router-link to='/List'>财经</router-link>
+        <router-link to='/List'>科技</router-link>
+        <router-link to='/List'>军事</router-link>
       </p>
       <div class="search-bar">
         <form class="layui-form" action="">
           <div class="layui-form-item">
             <div class="layui-input-block">
               <input type="text" name="title" placeholder="搜索你要的内容" autocomplete="off" class="layui-input">
-              <button class="layui-btn search-btn"  formnovalidate><i class="layui-icon layui-icon-search"></i></button>
+              <router-link to='/Search'><button class="layui-btn search-btn"  formnovalidate><i class="layui-icon layui-icon-search"></i></button></router-link>
+
             </div>
           </div>
         </form>
       </div>
       <div class="login">
         <router-link to='/Login'>登录</router-link>
-       <!-- <a href="login.html"> -->
-        <!-- <img src="@/assets/static/images/header.png" style="width: 36px; height: 36px;"> -->
-       <!-- </a> -->
+        ||<router-link to='/Reg'>注册</router-link>
+
       </div>
       <div class="menu-icon">
         <i class="layui-icon layui-icon-more-vertical"></i>

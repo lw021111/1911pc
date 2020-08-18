@@ -4,17 +4,18 @@
     <div class="micronews-header-wrap">
       <div class="micronews-header w1000 layui-clear">
         <h1 class="logo">
-          <a href="index.html">
+          <router-link to='/'>
             <img src="@/assets/static/images/LOGO.png" alt="logo">
             <span class="layui-hide">LOGO</span>
-          </a>
+          </router-link>
         </h1>
         <p class="nav">
-          <router-link to='/'></router-link>
+          <router-link to='/' class="active">最新</router-link>
           <router-link to='/List'>娱乐</router-link>
-          <router-link to='/Detail'>财经</router-link>
-          <router-link to='/Perslnfo'>评论</router-link>
-          <router-link to='/Search'>最新</router-link>
+          <router-link to='/List'>生活</router-link>
+          <router-link to='/List'>财经</router-link>
+          <router-link to='/List'>科技</router-link>
+          <router-link to='/List'>军事</router-link>
         </p>
         <div class="search-bar">
           <form class="layui-form" action="">
