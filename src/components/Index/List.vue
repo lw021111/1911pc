@@ -29,9 +29,9 @@
       </div>
       <div class="login">
 <!--        <router-link to='/Login'>登录</router-link>|| <router-link to='/Reg'>注册</router-link>-->
-        <a href="persInfo.html">
+        <router-link to='/Perslnfo'>
           <img src="@/assets/static/images/header.png" style="width: 36px; height: 36px;">
-        </a>
+        </router-link>
       </div>
       <div class="menu-icon">
         <i class="layui-icon layui-icon-more-vertical"></i>

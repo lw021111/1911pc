@@ -8,7 +8,18 @@ import Search from '@/components/Index/Search'
 import Perslnfo from '@/components/Index/Perslnfo'
 import Detail from '@/components/Index/Detail'
 import Reg from '@/components/Index/Reg'
+
+import VueResource from 'vue-resource'
+
+
+Vue.config.productionTip = false
+//使用http请求相关类库
+Vue.use(VueResource)
 Vue.use(Router)
+// 确保post请求不会被转换为 options 请求
+Vue.http.options.emulateJSON = true
+
+
 
 export default new Router({
   routes: [
