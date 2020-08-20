@@ -1,7 +1,6 @@
 <template>
     <div class="micronews">
 
-<div class="micronews">
   <div class="micronews-header-wrap">
     <div class="micronews-header w1000 layui-clear">
       <h1 class="logo">
@@ -361,37 +360,6 @@
     </div>
   </div>
 
- <!--  content-laytpl
-  <script id="demo" type="text/html">
-  {{#  layui.each(d.itemCont, function(index, item){ }}
-    <div class="item">
-      {{# if(item.img){ }}
-      <a href="details.html">
-        <img src="{{item.img}}">
-      </a>
-      {{#  } }}
-
-      <div class="item-info">
-        <h4><a href="details.html">{{item.title}}</a></h4>
-        <div class="b-txt">
-          <span class="label">{{item.label}}</span>
-          <span class="icon message">
-            <i class="layui-icon layui-icon-dialogue"></i>
-            {{item.message}}
-          </span>
-          <span class="icon time">
-            <i class="layui-icon layui-icon-log"></i>
-            {{item.time}}
-          </span>
-        </div>
-      </div>
-    </div>
-  {{#  }); }}
-  </script>-->
-      <!-- end-content-laytpl-->
-
-
-
       <div class="micronews-footer-wrap">
         <div class="micronews-footer w1000">
           <div class="ft-nav">
@@ -414,19 +382,11 @@
         </div>
       </div>
     </div>
-
-
-
-
-
-  </div>
-
 </template>
 
 <script>
   import "@/assets/layui/css/layui.css"
   import "@/assets/static/css/main.css"
-  import "@/assets/layui/layui.js"
 
 
 
@@ -436,18 +396,14 @@
           return{
           }
       },
-      methods:{
-
-      },
       mounted(){
-        layui.config({
-          base: '@/assets/static/js/'
-        }).use('index',function(){
+        layui.use('index',function(){
           var index = layui.index;
           index.banner()
           index.seachBtn()
           index.arrowutil()
         });
+        //layer.alert(111);
       }
     }
 
