@@ -58,7 +58,7 @@
         </div>
         <div>
           <p class="title">去南非旅行需要做什么准备</p>
-          <a href="list.html"><img src="@/assets/static/images/news_img1.jpg"></a>
+          <a href="list.html"><img src="@/assets/static/images/news_img2.jpg"></a>
         </div>
       </div>
     </div>
@@ -398,8 +398,17 @@
   import "@/assets/layui/css/layui.css"
   import "@/assets/layui/layui.js"
     export default {
-        name: "Index"
-    }
+        name: "Index",
+        mounted(){
+            layui.use('index',function(){
+                var index = layui.index;
+                index.banner()
+                index.seachBtn()
+                index.arrowutil()
+            });
+            layui.layer.alert('页面加载完成');
+        }
+  }
 </script>
 
 <style scoped>

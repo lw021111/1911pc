@@ -55,21 +55,15 @@
         <form class="layui-form"> <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
           <div class="layui-form-item">
             <div class="layui-input-block">
-              <input type="text" name="" lay-verify="required|phone" id="phone" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+              <input type="text" name="" lay-verify="required|phone" v-model="phone" id="phone" placeholder="请输入手机号" autocomplete="off" class="layui-input">
             </div>
           </div>
           <div class="layui-form-item">
             <div class="layui-input-block">
-              <input type="text"  name="" lay-verify="required" id="imgCode" placeholder="验证码" autocomplete="off" class="layui-input">
-              <img src="https://fly.layui.com/auth/imagecode?t=1542856673772">
+              <input type="password" name="" lay-verify="required|phone" v-model="password" id="password" placeholder="请输入密码" autocomplete="off" class="layui-input">
             </div>
           </div>
-          <div class="layui-form-item">
-            <div class="layui-input-block">
-              <input type="text"  name="" lay-verify="required" placeholder="请输入短信验证码" autocomplete="off" class="layui-input">
-              <input type="button"  id="veriCodeBtn" name="" value="验证码" class="obtain layui-btn">
-            </div>
-          </div>
+
           <div class="layui-form-item agreement">
             <div class="layui-input-block">
               <input type="checkbox" name="like1[write]" lay-verify="required" lay-skin="primary" title="我已阅读并同意" checked="">
@@ -79,7 +73,11 @@
           </div>
           <div class="layui-form-item">
             <div class="layui-input-block">
-              <button class="layui-btn" lay-submit lay-filter="*" onclick="return false">登录</button>
+              <button class="layui-btn" @click="login">登录</button>
+            </div>
+            <div class="layui-input-block">
+              <button class="layui-btn" lay-submit lay-filter="*" onclick="return false"><router-link to='/Reg'>注册</router-link></button>
+
             </div>
           </div>
           <!-- 更多表单结构排版请移步文档左侧【页面元素-表单】一项阅览 -->
@@ -108,8 +106,60 @@
     import "@/assets/layui/css/layui.css"
     import "@/assets/layui/layui.js"
     export default {
-        name: "Login"
+        name: "Login",
+        data () {
+            return{
+                password:"",
+                phone:""
+            }
+        },
+        methods:{
+             login:function() {
+                if(this.phone==""){
+                    alert("手机号不能为空");
+                    return false;
+                }
+              let reg = /^1[3|4|5|7|8][0-9]\d{8}$/;
+                  if(!reg.test(this.phone)){
+                      alert("手机号格式错误");
+                      return false;
+                  }
+                 let passwords=/^\d{6,}$/;
+                if(this.password==""){
+                    alert("请输入密码");
+                    return false;
+                }
+                if(!passwords.test(this.password)){
+                    alert("密码格式错误,最少6位纯数字");
+                    return false;
+                }
+
+                let api_login={
+                    phone:this.phone,
+                    password:this.password
+                };
+                this.$http.post('/api/login',api_login).then(response=>{
+                    if(response.body.error==200){
+                        alert(response.body.msg);
+                    }else{
+                        alert(response.body.msg);
+                        return false;
+                    }
+                },error => {
+                    alert("请求失败,请重试");
+                    console.log(error);
+                });
+            }
+        },
+        // method(){
+        //     this.http.post("/api/login").then(success=>{
+        //
+        //     },error => {
+        //         layui.layer.msg("请求失败,请重试");
+        //     })
+        // }
     }
+
 </script>
 
 <style scoped>
