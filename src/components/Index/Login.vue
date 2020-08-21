@@ -107,9 +107,13 @@
 <script>
     import "@/assets/static/css/main.css"
     import "@/assets/layui/css/layui.css"
-    import "@/assets/layui/layui.js"
+    import Common from '@/mixins/Common.js'
     export default {
-        name: "Login"
+        name: "Login",
+        mixins:[ Common ],
+      mounted(){
+          this.alert();
+      }
     }
 </script>
 
