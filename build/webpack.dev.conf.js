@@ -66,6 +66,9 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       },{
         from: path.resolve(__dirname, '../static/static/js'),
         to: './',
+      },{
+        from: path.resolve(__dirname, '../static/layui'),
+        to: './',
       }
     ])
   ]

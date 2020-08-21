@@ -120,7 +120,7 @@
     data(){
       return {
         img_code:'',
-        phone:'15910884933',
+        phone:'',
         user_img_code:'',
         TimeCode:'验证码',
         sendMark:1
@@ -145,16 +145,16 @@
       },
       getMsgCode:function () {
         if(this.phone==''){
-          alert('请输入你的手机号');
+          layer.alert('请输入你的手机号');
           return false;
         }
         var reg=/^1{1}\d{10}$/;
         if(!reg.test(this.phone)){
-          alert('手机号格式不正确');
+          layer.alert('手机号格式不正确');
           return false;
         }
         if(this.user_img_code==''){
-          alert('请输入图片验证码');
+          layer.alert('请输入图片验证码');
           return false;
         }
         let api_req={
@@ -173,7 +173,7 @@
 
           }
         },error=>{
-          alert('短信发送失败,请重试');
+          layer.alert('短信发送失败,请重试');
           return false;
         });
       }
@@ -183,7 +183,7 @@
         this.img_code=success.body.data.url
         this.sid=success.body.data.sid
       },error=>{
-        layui.layer.msg('请求失败,请重试');
+        layer.msg('请求失败,请重试');
       })
 
       layui.use('index',function(){
