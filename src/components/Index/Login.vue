@@ -142,6 +142,7 @@
                 this.$http.post('/api/login',api_login).then(response=>{
                     if(response.body.error==200){
                         alert(response.body.msg);
+                        this.$router.push({name: 'Index'});
                     }else{
                         alert(response.body.msg);
                         return false;

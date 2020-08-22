@@ -6,10 +6,6 @@ import router from './router'
 import VueResource from 'vue-resource'
 
 
-
-// 引入http请求相关类库
-import VueResource from 'vue-resource'
-
 Vue.config.productionTip = false
 
 //使用http请求相关类库
