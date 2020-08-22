@@ -57,6 +57,7 @@
           <p class="title">去南非旅行需要做什么准备</p>
           <a href="list.html"><img src="@/assets/static/images/news_img1.jpg"></a>
         </div>
+
       </div>
     </div>
   </div>
@@ -392,6 +393,7 @@
 
     export default {
         name: "Index",
+
       data(){
           return{
           }
@@ -406,6 +408,7 @@
         //layer.alert(111);
       }
     }
+
 
 </script>
 
