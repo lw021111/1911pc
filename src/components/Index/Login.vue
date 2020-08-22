@@ -76,7 +76,7 @@
             <div class="layui-input-block">
               <button class="layui-btn" @click="login">登录</button>
             </div>
-            <div class="layui-input-block">
+		<div class="layui-input-block">
               <button class="layui-btn" lay-submit lay-filter="*" onclick="return false"><router-link to='/Reg'>注册</router-link></button>
 
             </div>
@@ -108,12 +108,10 @@
     import Common from '@/mixins/Common.js'
     export default {
         name: "Login",
-<<<<<<< HEAD
         mixins:[ Common ],
       mounted(){
-          this.alert();
-      }
-=======
+          //this.alert();
+      },
         data () {
             return{
                 password:"",
@@ -165,7 +163,6 @@
         //         layui.layer.msg("请求失败,请重试");
         //     })
         // }
->>>>>>> 16a34082782b0db3c6b00c6e5db5f39a4c73eb35
     }
 
 </script>
