@@ -211,31 +211,31 @@
         // return false;
 
         if(this.phone == ''){
-          this.msg('请输入你的手机号');
+          layer.alert('请输入你的手机号');
           return false;
         }
         if(!this.checkPhone(this.phone)){
-          this.msg('手机号格式不正确');
+          layer.alert('手机号格式不正确');
           return false;
         }
         if(this.msg_send_mark != 1 ){
-          this.msg('请先获取短信');
+          layer.alert('请先获取短信');
           return  false;
         }
         if(this.msg_code == ''){
-          this.msg('短信验证码不能为空');
+          layer.alert('短信验证码不能为空');
           return false;
         }
         if(this.psd == ''){
-          this.msg('密码不能为空');
+          layer.alert('密码不能为空');
           return false;
         }
         if(this.psd.length < 6){
-          this.msg('密码最少6位');
+          layer.alert('密码最少6位');
           return false;
         }
         if(this.psd != this.repsd){
-          this.msg('两次密码输入不一致');
+          layer.alert('两次密码输入不一致');
           return false;
         }
         let api_req = {
@@ -248,14 +248,14 @@
 
         this.$http.post('/api/getImgUrl').then(success=>{
           if(success.body.status == 200){
-            alert('注册成功,GOGOGO--去登陆');
+            layer.alert('注册成功,GOGOGO--去登陆');
             this.$router.push({name:'Login'});
           }else{
-            this.msg(success.body.msg);
+            layer.alert(success.body.msg);
             return false;
           }
         },error=>{
-          this.msg('注册失败,请重试');
+          layer.alert('注册失败,请重试');
           return false;
         })
       }
