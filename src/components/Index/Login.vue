@@ -76,9 +76,10 @@
             <div class="layui-input-block">
               <button class="layui-btn" @click="login">登录</button>
             </div>
+          </div>
+          <div class="layui-form-item">
             <div class="layui-input-block">
-              <button class="layui-btn" lay-submit lay-filter="*" onclick="return false"><router-link to='/Reg'>注册</router-link></button>
-
+              <router-link to='Reg'> <button class="layui-btn" >去注册</button></router-link>
             </div>
           </div>
           <!-- 更多表单结构排版请移步文档左侧【页面元素-表单】一项阅览 -->
@@ -105,9 +106,15 @@
 <script>
     import "@/assets/static/css/main.css"
     import "@/assets/layui/css/layui.css"
-    import "@/assets/layui/layui.js"
+    import Common from '@/mixins/Common.js'
     export default {
         name: "Login",
+
+        mixins:[ Common ],
+      mounted(){
+          this.alert("登录页面");
+      },
+
         data () {
             return{
                 password:"",
@@ -115,24 +122,25 @@
             }
         },
         methods:{
+
              login:function() {
                 if(this.phone==""){
-                    alert("手机号不能为空");
+                    layer.alert("手机号不能为空");
                     return false;
                 }
               let reg = /^1[3|4|5|7|8][0-9]\d{8}$/;
                   if(!reg.test(this.phone)){
-                      alert("手机号格式错误");
+                      layer.alert("手机号格式错误");
                       return false;
                   }
                  let passwords=/^\d{6,}$/;
                 if(this.password==""){
-                    alert("请输入密码");
+                    layer.alert("请输入密码");
                     return false;
                 }
                 if(!passwords.test(this.password)){
-                    alert("密码格式错误,最少6位纯数字");
-                    return false;
+                    layer.alert("密码格式错误,最少6位纯数字");
+                        return false;
                 }
 
                 let api_login={
@@ -140,11 +148,11 @@
                     password:this.password
                 };
                 this.$http.post('/api/login',api_login).then(response=>{
-                    if(response.body.error==200){
-                        alert(response.body.msg);
+                    if(response.body.status==200){
+                        layer.alert(response.body.msg);
                         this.$router.push({name: 'Index'});
                     }else{
-                        alert(response.body.msg);
+                        layer.alert(response.body.msg);
                         return false;
                     }
                 },error => {
@@ -160,6 +168,7 @@
         //         layui.layer.msg("请求失败,请重试");
         //     })
         // }
+
     }
 
 </script>

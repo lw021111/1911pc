@@ -74,11 +74,11 @@
             <div class="list-item" id="LAY_demo2">
 
               <div class="item" v-for="(v,k) in t_list">
-                <a href="details.html">
+                <a href="">
                 <img :src="v.news_image" height="30" width="30">
                 </a>
                 <div class="item-info">
-                  <h4><a href="details.html">{{v.news_title}}</a></h4>
+                  <h4><a @click="href(v.news_id)">{{v.news_title}}</a></h4>
                   <div class="b-txt">
                     <span class="label">{{v.cate_name}}</span>
                     <span class="icon message">
@@ -87,7 +87,7 @@
                     </span>
                     <span class="icon time">
                       <i class="layui-icon layui-icon-log"></i>
-
+                        {{v.publish_time}}
                     </span>
                   </div>
                 </div>
@@ -106,7 +106,7 @@
                 <ul class="list-box" v-for="(v,k) in t_news">
                   <li class="list">
                     {{k+1}}
-                     <a href="list.html">{{v.news_title}}</a><i class="heat-icon"></i>
+                     <a @click="href(v.news_id)">{{v.news_title}}</a><i class="heat-icon"></i>
                   </li>
 
                 </ul>
@@ -157,6 +157,11 @@
                 t_news:[]
             }
         },
+        methods:{
+            href:function (news_id) {
+                this.$router.push({path:'/Detail',query:{news_id:news_id}});
+            }
+        },
         mounted() {
             layui.use('index', function () {
                 var index = layui.index;
@@ -166,20 +171,17 @@
             });
             //layer.alert(111);
             this.$http.get('/api/newsList').then(response => {
-                console.log(response);
-                this.t_list = response.body.data[0];
-                this.t_news = response.body.data[1];
-                // alert( this.t_list)
+                this.t_list=response.body.data;
             }, error => {
                 alert('调用接口失败');
-            })
+            });
+
+            this.$http.get('/api/wifiList').then(response => {
+                this.t_news=response.body.data;
+            }, error => {
+                alert('热点资讯调用接口失败');
+            });
         },
-        methods: {
-            loadData: function () {
-
-            },
-
-        }
 
     }
 

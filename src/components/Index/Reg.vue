@@ -67,24 +67,28 @@
             </div>
             <div class="layui-form-item">
               <div class="layui-input-block">
-                <input type="text"  name="" lay-verify="required" placeholder="请输入短信验证码" autocomplete="off" class="layui-input">
+                <input type="text"  name="" lay-verify="required"  v-model="msg_code"
+                       placeholder="请输入短信验证码" autocomplete="off" class="layui-input">
                 <input type="button"  id="veriCodeBtn" name="" @click="getMsgCode" :value="TimeCode" v-if="sendMark" class="obtain layui-btn">
                 <input type="button" name="" :value="TimeCode" v-else class="obtain layui-btn">
               </div>
             </div>
             <div class="layui-form-item">
               <div class="layui-input-block">
-                <input type="text" name="" lay-verify="required|phone" id="password" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                <input type="text" name="" lay-verify="required|phone" id="password" v-model="psd"
+                       placeholder="请输入密码" autocomplete="off" class="layui-input">
               </div>
             </div>
             <div class="layui-form-item">
               <div class="layui-input-block">
-                <input type="text" name="" lay-verify="required|phone" id="passwords" placeholder="请输入确认密码" autocomplete="off" class="layui-input">
+                <input type="text" name="" lay-verify="required|phone" id="passwords" v-model="repsd"
+                       placeholder="请输入确认密码" autocomplete="off" class="layui-input">
               </div>
             </div>
             <div class="layui-form-item agreement">
               <div class="layui-input-block">
-                <input type="checkbox" name="like1[write]" lay-verify="required" lay-skin="primary" title="我已阅读并同意" checked="">
+                <input type="checkbox" name="like[]" :checked="agree" :value="1" lay-filter="agree" v-model="agree"
+                       lay-skin="primary" title="我已阅读并同意" checked="">
                 <span class="txt"><a href="#">用户协议</a>和<a  href="#">隐私条款</a></span>
 
               </div>
@@ -92,7 +96,13 @@
 
             <div class="layui-form-item">
               <div class="layui-input-block">
-                <button class="layui-btn" lay-submit lay-filter="*" onclick="return false">注册</button>
+                <button class="layui-btn" type="button"  lay-filter="*" @click="reg">注册</button>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                <button class="layui-btn" style="background-color:rgb(187 184 184)" @click="gotoLogin"
+                        lay-submit lay-filter="*" onclick="return false">去登陆</button>
               </div>
             </div>
             <!-- 更多表单结构排版请移步文档左侧【页面元素-表单】一项阅览 -->
@@ -114,19 +124,27 @@
 <script>
   import "@/assets/static/css/main.css"
   import "@/assets/layui/css/layui.css"
-  import "@/assets/layui/layui.js"
+  import Common from '@/mixins/Common.js'
   export default {
-    name: "Reg",
+    name: "Login",
     data(){
       return {
         img_code:'',
         phone:'',
         user_img_code:'',
         TimeCode:'验证码',
-        sendMark:1
+        msg_code:'',
+        sendMark:1,
+        psd:'',
+        repsd:'',
+        agree:[ 2 ],
+        msg_send_mark:0,
       }
     },
     methods:{
+      gotoLogin:function(){
+        this.$router.push({name:'Login'})
+      },
       changeImgCode:function(){
         this.img_code=this.img_code+'&rand='+Math.random();
       },
@@ -157,35 +175,106 @@
           layer.alert('请输入图片验证码');
           return false;
         }
-        let api_req={
+        let api_req ={
           sid:this.sid,
           user_img_code:this.user_img_code,
           phone:this.phone,
           type:1
-        }
+        };
         //调短信发送接口
         this.$http.post('api/sendMsgCode',api_req).then(success=>{
+          console.log(success);
+
           if(success.body.status!=200){
             alert(success.body.msg);
+            return false;
+            layui.layer.alert(success.body.msg);
+            this.changeImgCode();
           }else{
             this.changeImgCode();
             this.CountDown();
+            this.msg_send_mark=1;
 
           }
         },error=>{
           layer.alert('短信发送失败,请重试');
           return false;
         });
+      },
+      reg:function(){
+        // layui.form.on('checkbox(agree'),function (data) {
+          // console.log(data.elem);
+          // console.log(data.elem.checked);
+          // console.log(data.elem.value);
+          // console.log(data.elem.othis);
+        // }
+        // return false;
+
+        if(this.phone == ''){
+          this.msg('请输入你的手机号');
+          return false;
+        }
+        if(!this.checkPhone(this.phone)){
+          this.msg('手机号格式不正确');
+          return false;
+        }
+        if(this.msg_send_mark != 1 ){
+          this.msg('请先获取短信');
+          return  false;
+        }
+        if(this.msg_code == ''){
+          this.msg('短信验证码不能为空');
+          return false;
+        }
+        if(this.psd == ''){
+          this.msg('密码不能为空');
+          return false;
+        }
+        if(this.psd.length < 6){
+          this.msg('密码最少6位');
+          return false;
+        }
+        if(this.psd != this.repsd){
+          this.msg('两次密码输入不一致');
+          return false;
+        }
+        let api_req = {
+          phone :this.phone,
+          password:this.psd,
+          mag_code:this.msg_code,
+          tt:1
+        }
+
+
+        this.$http.post('/api/getImgUrl').then(success=>{
+          if(success.body.status == 200){
+            alert('注册成功,GOGOGO--去登陆');
+            this.$router.push({name:'Login'});
+          }else{
+            this.msg(success.body.msg);
+            return false;
+          }
+        },error=>{
+          this.msg('注册失败,请重试');
+          return false;
+        })
       }
     },
+    mixins:[ Common ],
     mounted(){
-      this.$http.post('/api/getImgUrl').then(success=>{
+      // let api_req ={
+      //   sid:this.sid,
+      //   user_img_code:this.user_img_code,
+      //   phone:this.phone,
+      //   type:1
+      // };
+      this.$http.post('/api/getImgUrl').then( success =>{
         this.img_code=success.body.data.url
         this.sid=success.body.data.sid
       },error=>{
         layer.msg('请求失败,请重试');
       })
-
+      console.log(this);
       layui.use('index',function(){
         var index=layui.index;
         index.banner()
