@@ -114,7 +114,6 @@
       mounted(){
           this.alert("登录页面");
       },
-
         data () {
             return{
                 password:"",
@@ -156,7 +155,7 @@
                         return false;
                     }
                 },error => {
-                    alert("请求失败,请重试");
+                    layer.alert("请求失败,请重试");
                     console.log(error);
                 });
             }
@@ -168,7 +167,6 @@
         //         layui.layer.msg("请求失败,请重试");
         //     })
         // }
-
     }
 
 </script>
